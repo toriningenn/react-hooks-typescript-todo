@@ -11,6 +11,7 @@ const TodoListApp = (props: {}) => {
     const [doneTasks, setDoneTasks] = React.useState(Array<Task>(0));
     const [newTask, setNewTask] = React.useState({});
     const [movedTask, setMovedTask] = React.useState({});
+    const [deletedTask, setDeletedTask] = React.useState({});
 
 
     function getTodosAndSet() {
@@ -34,12 +35,34 @@ const TodoListApp = (props: {}) => {
         getDoneAndSet();
     },[movedTask])
 
+    useEffect(()=>{
+        getTodosAndSet();
+        getDoneAndSet();
+    },[deletedTask])
+
     function addNewTask(task: Task){
         setNewTask(axiosService.sendJsonGetNewTask(task));
     };
 
+    function deleteTask(index: number, currentState: TaskStatus){
+        let taskToDelete: Task;
+        switch (currentState) {
+            case "DONE":
+                taskToDelete = doneTasks.splice(index,1)[0];
+                if(taskToDelete.id) {
+                    axiosService.deleteTask(taskToDelete.id);
+                }
+                break;
+            case "TASKTODO":
+                taskToDelete = toDoTasks.splice(index,1)[0];
+                if(taskToDelete.id) {
+                    axiosService.deleteTask(taskToDelete.id);
+                }
+                break;
+        }
+        setDeletedTask(taskToDelete);
+    };
 
-    function deleteTask(){};
     function moveTask(index: number, currentState: TaskStatus){
         let taskToMove: Task;
         switch (currentState) {
@@ -60,9 +83,16 @@ const TodoListApp = (props: {}) => {
     };
 
     return <div>
+        <h2>To do:</h2>
+        <ul>
+            {toDoTasks.map((task: Task) =>
+                <div><DeleteButton deleteFunction={()=>deleteTask.bind(null, toDoTasks.indexOf(task),"TASKTODO")}/><li>{task.task}</li><MoveButton moveFunction={moveTask}/></div>)}
+        </ul>
+        <h2>Done:</h2>
         <ul>
             <li>kek</li>
-            {toDoTasks.map((task: Task) => <li>{task.task}</li>)}
+            {doneTasks.map((task: Task) =>
+                <div><DeleteButton deleteFunction={()=>deleteTask.bind(null, doneTasks.indexOf(task),"DONE")}/><li>{task.task}</li><MoveButton moveFunction={moveTask}/></div>)}
         </ul>
     </div>
 }

@@ -35,9 +35,9 @@ export const deleteTask = (id: number) => {
         .catch(function (error) {console.log(error);});
 }
 
-export function checkAndSave(something: void | Task[], setFunction: React.Dispatch<React.SetStateAction<Task[]>>) {
-    if(Array.isArray(something)) {
-        setFunction(something);
+export function checkAndSave(arr: void | Task[], setFunction: React.Dispatch<React.SetStateAction<Task[]>>) {
+    if(Array.isArray(arr)) {
+        setFunction(arr);
     }
     return;
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 
-const MoveButton = (props: {}) => {
+const MoveButton = (props: {moveFunction: object}) => {
     return <div></div>
 }
 
