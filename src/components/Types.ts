@@ -1,8 +1,8 @@
 export type Task = {
-    id: number;
+    id?: number;
     statusString: TaskStatus;
     task: string;
 }
 
-export type TaskStatus= "DONE"|"TASKTODO"
+export type TaskStatus = "DONE"|"TASKTODO"
 

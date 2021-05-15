@@ -5,6 +5,7 @@ import DeleteButton from "./DeleteButton";
 import MoveButton from "./MoveButton";
 import {Task, TaskStatus} from "./Types";
 import * as axiosService from "./axiosService/AxiosService";
+import Form from "./Form";
 
 const TodoListApp = (props: {}) => {
     const [toDoTasks, setToDoTasks] = React.useState(Array<Task>(0));
@@ -86,14 +87,14 @@ const TodoListApp = (props: {}) => {
         <h2>To do:</h2>
         <ul>
             {toDoTasks.map((task: Task) =>
-                <div><DeleteButton deleteFunction={()=>deleteTask.bind(null, toDoTasks.indexOf(task),"TASKTODO")}/><li>{task.task}</li><MoveButton moveFunction={moveTask}/></div>)}
+                <div><DeleteButton deleteFunction={deleteTask.bind(null, toDoTasks.indexOf(task),"TASKTODO")}/><li>{task.task}</li><MoveButton moveFunction={moveTask}/></div>)}
         </ul>
         <h2>Done:</h2>
         <ul>
-            <li>kek</li>
             {doneTasks.map((task: Task) =>
-                <div><DeleteButton deleteFunction={()=>deleteTask.bind(null, doneTasks.indexOf(task),"DONE")}/><li>{task.task}</li><MoveButton moveFunction={moveTask}/></div>)}
+                <div><DeleteButton deleteFunction={deleteTask.bind(null, doneTasks.indexOf(task),"DONE")}/><li>{task.task}</li><MoveButton moveFunction={moveTask}/></div>)}
         </ul>
+        <Form addFunction={addNewTask}/>
     </div>
 }
 

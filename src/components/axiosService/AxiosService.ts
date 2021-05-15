@@ -19,8 +19,7 @@ export const getAllTODOTasks = (): Promise<Task[] | void> => {
 }
 
 export const sendJsonGetNewTask = (task: Task): Promise<Task> => {
-    const taskJSON: string = JSON.stringify(task);
-    return axios.post("http://localhost:8080/api/tasks", taskJSON)
+    return axios.post("http://localhost:8080/api/add", task)
         .then((responce) => responce.data as Task)
 }
 

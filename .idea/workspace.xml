@@ -3,6 +3,11 @@
   <component name="ChangeListManager">
     <list default="true" id="a5224bc4-11fd-43a9-acbc-177feccf2d6a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/DeleteButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/DeleteButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Form.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Form.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/TodoListApp.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TodoListApp.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Types.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/axiosService/AxiosService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/axiosService/AxiosService.ts" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -87,7 +92,7 @@
       <workItem from="1620826534336" duration="4857000" />
       <workItem from="1620900078358" duration="130000" />
       <workItem from="1620900252415" duration="6180000" />
-      <workItem from="1620982226361" duration="11460000" />
+      <workItem from="1620982226361" duration="18800000" />
     </task>
     <servers />
   </component>

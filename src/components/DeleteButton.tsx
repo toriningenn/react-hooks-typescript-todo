@@ -4,10 +4,8 @@ import { useEffect } from 'react';
 
 
 const DeleteButton = (props: {deleteFunction: ()=>void}) => {
-    function deleteHandler () {
-        props.deleteFunction();
-    }
-    return <button type="button" onClick={deleteHandler}>X</button>
+
+    return <button type="button" onClick={props.deleteFunction}>X</button>
 }
 
 export default DeleteButton;
