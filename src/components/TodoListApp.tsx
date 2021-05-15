@@ -21,6 +21,10 @@ const TodoListApp = (props: {}) => {
     function getDoneAndSet() {
         axiosService.getAllDoneTasks().then((responce) => axiosService.checkAndSave(responce, setDoneTasks));
     }
+    function getAndSetBothLists() {
+    getTodosAndSet();
+    getDoneAndSet();
+    }
 
     useEffect(()=>{
         getTodosAndSet();
@@ -30,11 +34,6 @@ const TodoListApp = (props: {}) => {
     useEffect(()=>{
         getTodosAndSet();
     },[newTask])
-
-    useEffect(()=>{
-        getTodosAndSet();
-        getDoneAndSet();
-    },[movedTask])
 
 
     function addNewTask(task: Task){
@@ -66,13 +65,13 @@ const TodoListApp = (props: {}) => {
             case "DONE":
                 taskToMove = doneTasks.splice(index,1)[0];
                 if(taskToMove.id) {
-                    axiosService.changeTaskStatus(taskToMove.id);
+                    axiosService.changeTaskStatus(taskToMove.id).then(()=>getAndSetBothLists());
                 }
                 break;
             case "TASKTODO":
                 taskToMove = toDoTasks.splice(index,1)[0];
                 if(taskToMove.id) {
-                    axiosService.changeTaskStatus(taskToMove.id);
+                    axiosService.changeTaskStatus(taskToMove.id).then(()=>getAndSetBothLists());
                 }
                 break;
         }
@@ -83,12 +82,12 @@ const TodoListApp = (props: {}) => {
         <h2>To do:</h2>
         <ul>
             {toDoTasks.map((task: Task) =>
-                <div><DeleteButton deleteFunction={deleteTask.bind(null, toDoTasks.indexOf(task),task.statusString)}/><li>{task.task}</li><MoveButton moveFunction={moveTask}/></div>)}
+                <div><DeleteButton deleteFunction={deleteTask.bind(null, toDoTasks.indexOf(task),task.statusString)}/><li>{task.task}</li><MoveButton moveFunction={moveTask.bind(null, doneTasks.indexOf(task),task.statusString)} done={false}/></div>)}
         </ul>
         <h2>Done:</h2>
         <ul>
             {doneTasks.map((task: Task) =>
-                <div><DeleteButton deleteFunction={deleteTask.bind(null, doneTasks.indexOf(task),task.statusString)}/><li>{task.task}</li><MoveButton moveFunction={moveTask}/></div>)}
+                <div><DeleteButton deleteFunction={deleteTask.bind(null, doneTasks.indexOf(task),task.statusString)}/><li>{task.task}</li><MoveButton moveFunction={moveTask.bind(null, doneTasks.indexOf(task),task.statusString)} done={true}/></div>)}
         </ul>
         <Form addFunction={addNewTask}/>
     </div>
