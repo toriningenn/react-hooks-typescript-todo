@@ -30,7 +30,7 @@ export const changeTaskStatus = (id: number) => {
 }
 
 export const deleteTask = (id: number) => {
-    axios.delete(`http://localhost:8080/api/${id}`)
+    return axios.delete(`http://localhost:8080/api/${id}`)
         .catch(function (error) {console.log(error);});
 }
 

@@ -36,10 +36,6 @@ const TodoListApp = (props: {}) => {
         getDoneAndSet();
     },[movedTask])
 
-    useEffect(()=>{
-        getTodosAndSet();
-        getDoneAndSet();
-    },[deletedTask])
 
     function addNewTask(task: Task){
         setNewTask(axiosService.sendJsonGetNewTask(task));
@@ -51,13 +47,13 @@ const TodoListApp = (props: {}) => {
             case "DONE":
                 taskToDelete = doneTasks.splice(index,1)[0];
                 if(taskToDelete.id) {
-                    axiosService.deleteTask(taskToDelete.id);
+                    axiosService.deleteTask(taskToDelete.id).then(()=>getDoneAndSet());
                 }
                 break;
             case "TASKTODO":
                 taskToDelete = toDoTasks.splice(index,1)[0];
                 if(taskToDelete.id) {
-                    axiosService.deleteTask(taskToDelete.id);
+                    axiosService.deleteTask(taskToDelete.id).then(()=>getTodosAndSet());
                 }
                 break;
         }
@@ -87,12 +83,12 @@ const TodoListApp = (props: {}) => {
         <h2>To do:</h2>
         <ul>
             {toDoTasks.map((task: Task) =>
-                <div><DeleteButton deleteFunction={deleteTask.bind(null, toDoTasks.indexOf(task),"TASKTODO")}/><li>{task.task}</li><MoveButton moveFunction={moveTask}/></div>)}
+                <div><DeleteButton deleteFunction={deleteTask.bind(null, toDoTasks.indexOf(task),task.statusString)}/><li>{task.task}</li><MoveButton moveFunction={moveTask}/></div>)}
         </ul>
         <h2>Done:</h2>
         <ul>
             {doneTasks.map((task: Task) =>
-                <div><DeleteButton deleteFunction={deleteTask.bind(null, doneTasks.indexOf(task),"DONE")}/><li>{task.task}</li><MoveButton moveFunction={moveTask}/></div>)}
+                <div><DeleteButton deleteFunction={deleteTask.bind(null, doneTasks.indexOf(task),task.statusString)}/><li>{task.task}</li><MoveButton moveFunction={moveTask}/></div>)}
         </ul>
         <Form addFunction={addNewTask}/>
     </div>
