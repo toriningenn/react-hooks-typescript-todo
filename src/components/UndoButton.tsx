@@ -1,6 +1,6 @@
 import {Action, Task, TaskStatus} from "../Types";
-import {deleteTask} from "../axiosService/AxiosService";
 import undo from "../UndoLogic";
+import React, {KeyboardEventHandler} from "react";
 
 export const UndoButton = (props: {
     lastActionType: Action, lastDeleted: Task, lastMoved: Task, lastAdded: Task,
@@ -13,6 +13,6 @@ export const UndoButton = (props: {
         undo(props);
     }
 
-    return <button onClick={clickHandler}>⎌</button>
+    return <button onClick={clickHandler}>⎌</button> ;
 }
 

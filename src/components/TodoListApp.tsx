@@ -5,6 +5,7 @@ import {Action, Task, TaskStatus} from "../Types";
 import * as axiosService from "../axiosService/AxiosService";
 import Form from "./Form";
 import {UndoButton} from "./UndoButton";
+import undo from "../UndoLogic";
 
 const TodoListApp = (props: {}) => {
     const [toDoTasks, setToDoTasks] = React.useState(Array<Task>(0));
@@ -31,13 +32,10 @@ const TodoListApp = (props: {}) => {
         getAndSetBothLists();
     }, [])
 
-    useEffect(() => {
-        getAndSetBothLists();
-    }, [newTask])
-
     function addNewTask(task: Task) {
         axiosService.sendNewTask(task)
             .then(() => {
+                getAndSetBothLists();
                 setLastActionType("ADD")
                 setNewTask(task);
             });
@@ -49,18 +47,24 @@ const TodoListApp = (props: {}) => {
             case "DONE":
                 taskToDelete = doneTasks.splice(index, 1)[0];
                 if (taskToDelete.id) {
-                    axiosService.deleteTask(taskToDelete.id).then(() => getDoneAndSet());
+                    axiosService.deleteTask(taskToDelete.id).then(() => getDoneAndSet())
+                        .then(() => setDeletedTask(taskToDelete))
+                        .then(() => {
+                            setLastActionType("DELETE")
+                        });
                 }
                 break;
             case "TASKTODO":
                 taskToDelete = toDoTasks.splice(index, 1)[0];
                 if (taskToDelete.id) {
-                    axiosService.deleteTask(taskToDelete.id).then(() => getTodosAndSet());
+                    axiosService.deleteTask(taskToDelete.id).then(() => getTodosAndSet())
+                        .then(() => setDeletedTask(taskToDelete))
+                        .then(() => {
+                            setLastActionType("DELETE")
+                        });
                 }
                 break;
         }
-        setDeletedTask(taskToDelete);
-        setLastActionType("DELETE");
     };
 
     function moveTask(index: number, currentState: TaskStatus) {
@@ -89,6 +93,17 @@ const TodoListApp = (props: {}) => {
         }
         setLastActionType("MOVE");
     };
+
+    function keyPressHandler(this: Document, event: KeyboardEvent) {
+        if (event.ctrlKey && event.key === 'z') {
+            undo({
+                lastActionType: lastActionType, lastDeleted: deletedTask, lastMoved: movedTask,
+                moveFunc: moveTask, addFunc: addNewTask, deleteFunc: deleteTask,
+                lastAdded: newTask, doneArr: doneTasks, todoArr: toDoTasks
+            });
+        }
+    }
+    document.addEventListener("keypress",keyPressHandler);
 
     return <div>
         <h2>To do:</h2>

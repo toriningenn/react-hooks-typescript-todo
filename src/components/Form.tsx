@@ -17,13 +17,12 @@ const Form = (props: { addFunction: (task: Task) => void }) => {
         setUserInput("");
     }
 
-    return <div>
-        <form onSubmit={submitHandler}>
+    return <form onSubmit={submitHandler}>
             <label>New task:</label>
             <input autoComplete="off" type="text" onChange={inputHandler} value={userInput}/>
             <button type="submit">Submit</button>
-        </form>
-    </div>
+        </form>;
+
 }
 
 export default Form;

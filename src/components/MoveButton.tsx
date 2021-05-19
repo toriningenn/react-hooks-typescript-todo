@@ -3,9 +3,8 @@ const MoveButton = (props: { moveFunction: () => void, done: boolean }) => {
         return props.done ? "↑" : "✓";
     }
 
-    return <div>
-        <button onClick={props.moveFunction}>{buttonLook()}</button>
-    </div>
+    return <button onClick={props.moveFunction}>{buttonLook()}</button>;
+
 }
 
 export default MoveButton;

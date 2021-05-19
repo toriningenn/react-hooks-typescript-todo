@@ -1,4 +1,5 @@
 import {Action, Task, TaskStatus} from "./Types";
+import React from "react";
 
 const undo = ({
                   lastActionType, lastDeleted, lastMoved, lastAdded,
@@ -28,12 +29,15 @@ const undo = ({
             }
             case "ADD":
                 console.log(lastAdded);
-                deleteFunc(todoArr.findIndex((task)=>task.task === lastAdded.task), "TASKTODO");
+                let taskIndex = todoArr.findIndex((task)=>task.task === lastAdded.task)
+                deleteFunc(taskIndex, "TASKTODO");
                 break;
             case "":
                 break;
         }
     }
 ;
+
+
 
 export default undo;
