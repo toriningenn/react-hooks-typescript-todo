@@ -35,9 +35,12 @@ const TodoListApp = (props: {}) => {
         getAndSetBothLists();
     }, [newTask])
 
-
     function addNewTask(task: Task) {
-        axiosService.sendJsonGetNewTask(task).then((task) => setNewTask(task)).then(()=>{setLastActionType("ADD")});
+        axiosService.sendNewTask(task)
+            .then(() => {
+                setLastActionType("ADD")
+                setNewTask(task);
+            });
     };
 
     function deleteTask(index: number, currentState: TaskStatus) {

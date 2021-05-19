@@ -11,14 +11,16 @@ const Form = (props: { addFunction: (task: Task) => void }) => {
     };
 
     function submitHandler(event: FormEvent<HTMLFormElement>) {
+        event.preventDefault();
         let newTask: Task = {statusString: "TASKTODO", task: userInput};
         props.addFunction(newTask);
+        setUserInput("");
     }
 
     return <div>
         <form onSubmit={submitHandler}>
             <label>New task:</label>
-            <input autoComplete="off" type="text" onChange={inputHandler}/>
+            <input autoComplete="off" type="text" onChange={inputHandler} value={userInput}/>
             <button type="submit">Submit</button>
         </form>
     </div>

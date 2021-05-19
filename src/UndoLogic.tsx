@@ -27,7 +27,8 @@ const undo = ({
                 break;
             }
             case "ADD":
-                deleteFunc(todoArr.indexOf(lastAdded), "TASKTODO");
+                console.log(lastAdded);
+                deleteFunc(todoArr.findIndex((task)=>task.task === lastAdded.task), "TASKTODO");
                 break;
             case "":
                 break;
