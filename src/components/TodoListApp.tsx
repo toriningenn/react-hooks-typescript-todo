@@ -9,11 +9,15 @@ import {UndoButton} from "./UndoButton";
 const TodoListApp = (props: {}) => {
     const [toDoTasks, setToDoTasks] = React.useState(Array<Task>(0));
     const [doneTasks, setDoneTasks] = React.useState(Array<Task>(0));
-    const [newTask, setNewTask] = React.useState({});
+    const [newTask, setNewTask] = React.useState({} as Task);
     const [movedTask, setMovedTask] = React.useState({} as Task);
     const [deletedTask, setDeletedTask] = React.useState({} as Task);
     const [lastActionType, setLastActionType] = React.useState("" as Action);
 
+    function getAndSetBothLists() {
+        getTodosAndSet();
+        getDoneAndSet();
+    }
 
     function getTodosAndSet() {
         axiosService.getAllTODOTasks().then((responce) => axiosService.checkAndSave(responce, setToDoTasks));
@@ -23,24 +27,18 @@ const TodoListApp = (props: {}) => {
         axiosService.getAllDoneTasks().then((responce) => axiosService.checkAndSave(responce, setDoneTasks));
     }
 
-    function getAndSetBothLists() {
-        getTodosAndSet();
-        getDoneAndSet();
-    }
-
     useEffect(() => {
-        getTodosAndSet();
-        getDoneAndSet();
+        getAndSetBothLists();
     }, [])
 
     useEffect(() => {
-        getTodosAndSet();
+        getAndSetBothLists();
     }, [newTask])
 
 
     function addNewTask(task: Task) {
         axiosService.sendJsonGetNewTask(task).then((task) => setNewTask(task));
-
+        setLastActionType("ADD");
     };
 
     function deleteTask(index: number, currentState: TaskStatus) {
@@ -69,17 +67,24 @@ const TodoListApp = (props: {}) => {
             case "DONE":
                 taskToMove = doneTasks.splice(index, 1)[0];
                 if (taskToMove.id) {
-                    axiosService.changeTaskStatus(taskToMove.id).then(() => getAndSetBothLists());
+                    axiosService.changeTaskStatus(taskToMove.id)
+                        .then((returnedChangedTask) => {
+                            setMovedTask(returnedChangedTask as Task)
+                        })
+                        .then(() => getAndSetBothLists());
                 }
                 break;
             case "TASKTODO":
                 taskToMove = toDoTasks.splice(index, 1)[0];
                 if (taskToMove.id) {
-                    axiosService.changeTaskStatus(taskToMove.id).then(() => getAndSetBothLists());
+                    axiosService.changeTaskStatus(taskToMove.id)
+                        .then((returnedChangedTask) => {
+                            setMovedTask(returnedChangedTask as Task)
+                        })
+                        .then(() => getAndSetBothLists());
                 }
                 break;
         }
-        setMovedTask(taskToMove);
         setLastActionType("MOVE");
     };
 
@@ -105,9 +110,9 @@ const TodoListApp = (props: {}) => {
                         deleteFunction={deleteTask.bind(null, doneTasks.indexOf(task), task.statusString)}/></div>)}
         </ul>
         <Form addFunction={addNewTask}/>
-        <UndoButton lastActionType={lastActionType} lastDeleted={deletedTask}
-                    lastMoved={movedTask} moveFunc={moveTask} addFunc={addNewTask}
-                    doneArr={doneTasks} todoArr={toDoTasks}/>
+        <UndoButton lastActionType={lastActionType} lastDeleted={deletedTask} lastMoved={movedTask}
+                    moveFunc={moveTask} addFunc={addNewTask} deleteFunc={deleteTask}
+                    lastAdded={newTask} doneArr={doneTasks} todoArr={toDoTasks}/>
     </div>
 }
 

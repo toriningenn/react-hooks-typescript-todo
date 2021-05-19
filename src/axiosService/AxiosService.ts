@@ -9,13 +9,15 @@ export const getAllTasks = (): Promise<Task[]> => {
 }
 
 export const getAllDoneTasks = (): Promise<Task[] | void> => {
-  return getAllTasks().then((responce) => responce.filter(task => task.statusString === "DONE"))
-      .catch(function (error) {console.log(error);});
+    return getAllTasks().then((responce) => responce.filter(task => task.statusString === "DONE"), (error) => {
+        console.log(error)
+    })
 }
 
 export const getAllTODOTasks = (): Promise<Task[] | void> => {
-    return getAllTasks().then((responce) => responce.filter(task => task.statusString === "TASKTODO"))
-        .catch(function (error) {console.log(error);});
+    return getAllTasks().then((responce) => responce.filter(task => task.statusString === "TASKTODO"), (error) => {
+        console.log(error)
+    })
 }
 
 export const sendJsonGetNewTask = (task: Task): Promise<Task> => {
@@ -25,17 +27,20 @@ export const sendJsonGetNewTask = (task: Task): Promise<Task> => {
 
 export const changeTaskStatus = (id: number) => {
     return axios.post(`http://localhost:8080/api/${id}`)
-        .then((responce) => responce.data as Task[])
-        .catch(function (error) {console.log(error);});
+        .then((responce) => responce.data as Task, (error) => {
+            console.log(error)
+        });
 }
 
 export const deleteTask = (id: number) => {
     return axios.delete(`http://localhost:8080/api/${id}`)
-        .catch(function (error) {console.log(error);});
+        .catch(function (error) {
+            console.log(error);
+        });
 }
 
 export function checkAndSave(arr: void | Task[], setFunction: React.Dispatch<React.SetStateAction<Task[]>>) {
-    if(Array.isArray(arr)) {
+    if (Array.isArray(arr)) {
         setFunction(arr);
     }
     return;

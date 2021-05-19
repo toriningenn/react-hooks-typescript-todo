@@ -1,10 +1,9 @@
 import React from 'react';
 import TodoListApp from "./components/TodoListApp";
 
-const App = (props: { }) =>
+const App = () =>
     <div>
-    <TodoListApp/>
+        <TodoListApp/>
     </div>
 ;
-
 export default App;

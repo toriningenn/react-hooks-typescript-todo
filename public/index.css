@@ -2,12 +2,14 @@ div {
     background-color: lightgray;
     color: midnightblue;
 }
+
 .container {
-  display: flex;
-  flex-flow: column;
+    display: flex;
+    flex-flow: column;
 }
+
 .task {
-display: flex;
-justify-content: space-around;
-width: fit-content;
+    display: flex;
+    justify-content: space-around;
+    width: fit-content;
 }

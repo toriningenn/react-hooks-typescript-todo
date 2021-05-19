@@ -1,17 +1,18 @@
 import React, {FormEvent} from 'react';
-import { useState } from 'react';
+import {useState} from 'react';
 import {Task} from "./Types";
 
 const Form = (props: { addFunction: (task: Task) => void }) => {
 
- const [userInput,setUserInput] = useState("");
+    const [userInput, setUserInput] = useState("");
 
-    function inputHandler (event: FormEvent<HTMLInputElement>){
-       setUserInput(event.currentTarget.value);
+    function inputHandler(event: FormEvent<HTMLInputElement>) {
+        setUserInput(event.currentTarget.value);
     };
+
     function submitHandler(event: FormEvent<HTMLFormElement>) {
-            let newTask: Task = {statusString: "TASKTODO", task: userInput};
-            props.addFunction(newTask);
+        let newTask: Task = {statusString: "TASKTODO", task: userInput};
+        props.addFunction(newTask);
     }
 
     return <div>
