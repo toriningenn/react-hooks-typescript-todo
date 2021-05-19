@@ -1,7 +1,7 @@
 import React, {SetStateAction, useEffect} from 'react';
 import DeleteButton from "./DeleteButton";
 import MoveButton from "./MoveButton";
-import {Action, Task, TaskStatus} from "./Types";
+import {Action, Task, TaskStatus} from "../Types";
 import * as axiosService from "../axiosService/AxiosService";
 import Form from "./Form";
 import {UndoButton} from "./UndoButton";
@@ -37,8 +37,7 @@ const TodoListApp = (props: {}) => {
 
 
     function addNewTask(task: Task) {
-        axiosService.sendJsonGetNewTask(task).then((task) => setNewTask(task));
-        setLastActionType("ADD");
+        axiosService.sendJsonGetNewTask(task).then((task) => setNewTask(task)).then(()=>{setLastActionType("ADD")});
     };
 
     function deleteTask(index: number, currentState: TaskStatus) {

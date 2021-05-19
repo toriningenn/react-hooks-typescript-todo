@@ -1,6 +1,6 @@
 import React, {FormEvent} from 'react';
 import {useState} from 'react';
-import {Task} from "./Types";
+import {Task} from "../Types";
 
 const Form = (props: { addFunction: (task: Task) => void }) => {
 
