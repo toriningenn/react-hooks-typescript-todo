@@ -1,5 +1,5 @@
 import axios from "axios";
-import {Task} from "../Types";
+import {Task} from "../components/Types";
 import React from "react";
 
 

@@ -4,5 +4,6 @@ export type Task = {
     task: string;
 }
 
-export type TaskStatus = "DONE"|"TASKTODO"
+export type Action = "DELETE" | "MOVE" | "";
+export type TaskStatus = "DONE" | "TASKTODO";
 
