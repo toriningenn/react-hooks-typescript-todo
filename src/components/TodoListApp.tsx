@@ -1,11 +1,10 @@
-import React, {SetStateAction, useEffect} from 'react';
+import React, {useEffect} from 'react';
 import DeleteButton from "./DeleteButton";
 import MoveButton from "./MoveButton";
 import {Action, Task, TaskStatus} from "../Types";
 import * as axiosService from "../axiosService/AxiosService";
 import Form from "./Form";
 import {UndoButton} from "./UndoButton";
-import undo from "../UndoLogic";
 
 const TodoListApp = (props: {}) => {
     const [toDoTasks, setToDoTasks] = React.useState(Array<Task>(0));
@@ -30,15 +29,18 @@ const TodoListApp = (props: {}) => {
 
     useEffect(() => {
         getAndSetBothLists();
+        document.addEventListener("keydown", keyDownHandler);
     }, [])
 
     function addNewTask(task: Task) {
         axiosService.sendNewTask(task)
+            .then((responce) => {
+                setNewTask(responce);
+            })
             .then(() => {
-                getAndSetBothLists();
-                setLastActionType("ADD")
-                setNewTask(task);
-            });
+                setLastActionType("ADD");
+            })
+            .then(() => getAndSetBothLists());
     };
 
     function deleteTask(index: number, currentState: TaskStatus) {
@@ -46,25 +48,20 @@ const TodoListApp = (props: {}) => {
         switch (currentState) {
             case "DONE":
                 taskToDelete = doneTasks.splice(index, 1)[0];
-                if (taskToDelete.id) {
+                if (taskToDelete && taskToDelete.id) {
                     axiosService.deleteTask(taskToDelete.id).then(() => getDoneAndSet())
-                        .then(() => setDeletedTask(taskToDelete))
-                        .then(() => {
-                            setLastActionType("DELETE")
-                        });
+                        .then(() => {setDeletedTask(taskToDelete)})
                 }
                 break;
             case "TASKTODO":
                 taskToDelete = toDoTasks.splice(index, 1)[0];
-                if (taskToDelete.id) {
+                if (taskToDelete && taskToDelete.id) {
                     axiosService.deleteTask(taskToDelete.id).then(() => getTodosAndSet())
-                        .then(() => setDeletedTask(taskToDelete))
-                        .then(() => {
-                            setLastActionType("DELETE")
-                        });
+                        .then(() => {setDeletedTask(taskToDelete)})
                 }
                 break;
         }
+        setLastActionType("DELETE");
     };
 
     function moveTask(index: number, currentState: TaskStatus) {
@@ -72,7 +69,7 @@ const TodoListApp = (props: {}) => {
         switch (currentState) {
             case "DONE":
                 taskToMove = doneTasks.splice(index, 1)[0];
-                if (taskToMove.id) {
+                if (taskToMove && taskToMove.id) {
                     axiosService.changeTaskStatus(taskToMove.id)
                         .then((returnedChangedTask) => {
                             setMovedTask(returnedChangedTask as Task)
@@ -82,7 +79,7 @@ const TodoListApp = (props: {}) => {
                 break;
             case "TASKTODO":
                 taskToMove = toDoTasks.splice(index, 1)[0];
-                if (taskToMove.id) {
+                if (taskToMove && taskToMove.id) {
                     axiosService.changeTaskStatus(taskToMove.id)
                         .then((returnedChangedTask) => {
                             setMovedTask(returnedChangedTask as Task)
@@ -94,16 +91,14 @@ const TodoListApp = (props: {}) => {
         setLastActionType("MOVE");
     };
 
-    function keyPressHandler(this: Document, event: KeyboardEvent) {
+    function keyDownHandler(this: Document, event: KeyboardEvent) {
         if (event.ctrlKey && event.key === 'z') {
-            undo({
-                lastActionType: lastActionType, lastDeleted: deletedTask, lastMoved: movedTask,
-                moveFunc: moveTask, addFunc: addNewTask, deleteFunc: deleteTask,
-                lastAdded: newTask, doneArr: doneTasks, todoArr: toDoTasks
-            });
+            event.preventDefault();
+            let undoButton = document.getElementById('undoButton');
+            if (undoButton)
+                undoButton.click();
         }
     }
-    document.addEventListener("keypress",keyPressHandler);
 
     return <div>
         <h2>To do:</h2>

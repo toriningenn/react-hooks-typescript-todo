@@ -18,10 +18,10 @@ const Form = (props: { addFunction: (task: Task) => void }) => {
     }
 
     return <form onSubmit={submitHandler}>
-            <label>New task:</label>
-            <input autoComplete="off" type="text" onChange={inputHandler} value={userInput}/>
-            <button type="submit">Submit</button>
-        </form>;
+        <label>New task:</label>
+        <input autoComplete="off" type="text" onChange={inputHandler} value={userInput}/>
+        <button type="submit">Submit</button>
+    </form>;
 
 }
 

@@ -1,17 +1,13 @@
-import {Action, Task, TaskStatus} from "./Types";
+import {undoProps} from "./Types";
 import React from "react";
 
 const undo = ({
-                  lastActionType, lastDeleted, lastMoved, lastAdded,
+                  lastActionType, lastDeleted,
+                  lastMoved, lastAdded,
                   moveFunc, addFunc,
                   deleteFunc,
                   doneArr, todoArr
-              }: {
-        lastActionType: Action, lastDeleted: Task, lastMoved: Task, lastAdded: Task,
-        moveFunc: (index: number, currentState: TaskStatus) => void, addFunc: (task: Task) => void,
-        deleteFunc: (index: number, currentState: TaskStatus) => void,
-        doneArr: Task[], todoArr: Task[]
-    }) => {
+              }: undoProps) => {
         switch (lastActionType) {
             case "DELETE":
                 addFunc(lastDeleted);
@@ -28,16 +24,14 @@ const undo = ({
                 break;
             }
             case "ADD":
-                console.log(lastAdded);
-                let taskIndex = todoArr.findIndex((task)=>task.task === lastAdded.task)
-                deleteFunc(taskIndex, "TASKTODO");
+                if (todoArr.indexOf(lastAdded))
+                    deleteFunc(todoArr.indexOf(lastAdded), "TASKTODO");
                 break;
             case "":
                 break;
         }
     }
 ;
-
 
 
 export default undo;

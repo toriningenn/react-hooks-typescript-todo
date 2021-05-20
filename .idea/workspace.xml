@@ -4,11 +4,14 @@
     <list default="true" id="a5224bc4-11fd-43a9-acbc-177feccf2d6a" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Types.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/Types.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/UndoLogic.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/UndoLogic.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/axiosService/AxiosService.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/axiosService/AxiosService.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/Form.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Form.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/MoveButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/MoveButton.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/TodoListApp.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/TodoListApp.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/components/UndoButton.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/UndoButton.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -99,6 +102,7 @@
       <workItem from="1621166941307" duration="3233000" />
       <workItem from="1621318463406" duration="139000" />
       <workItem from="1621397438299" duration="22978000" />
+      <workItem from="1621444563129" duration="7743000" />
     </task>
     <servers />
   </component>
