@@ -1,8 +1,8 @@
-import {undoProps} from "../Types";
+import {UndoProps} from "../Types";
 import undo from "../UndoLogic";
 import React, {KeyboardEventHandler} from "react";
 
-export const UndoButton = (props: undoProps) => {
+export const UndoButton = (props: UndoProps) => {
 
     function clickHandler() {
         undo(props);

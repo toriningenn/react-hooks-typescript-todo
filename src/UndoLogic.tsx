@@ -1,4 +1,4 @@
-import {undoProps} from "./Types";
+import {UndoProps} from "./Types";
 import React from "react";
 
 const undo = ({
@@ -7,7 +7,7 @@ const undo = ({
                   moveFunc, addFunc,
                   deleteFunc,
                   doneArr, todoArr
-              }: undoProps) => {
+              }: UndoProps) => {
         switch (lastActionType) {
             case "DELETE":
                 addFunc(lastDeleted);
@@ -26,8 +26,6 @@ const undo = ({
             case "ADD":
                 if (todoArr.indexOf(lastAdded))
                     deleteFunc(todoArr.indexOf(lastAdded), "TASKTODO");
-                break;
-            case "":
                 break;
         }
     }

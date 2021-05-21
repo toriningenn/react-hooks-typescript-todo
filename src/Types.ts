@@ -4,7 +4,7 @@ export type Task = {
     task: string;
 }
 
-export type undoProps = {
+export type UndoProps = {
     lastActionType: Action,
     lastDeleted: Task,
     lastMoved: Task,
@@ -16,7 +16,7 @@ export type undoProps = {
     todoArr: Task[],
 }
 
-export type Action = "DELETE" | "MOVE" | "ADD" | "";
+export type Action = "DELETE" | "MOVE" | "ADD";
 
 export type TaskStatus = "DONE" | "TASKTODO";
 
